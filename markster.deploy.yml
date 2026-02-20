@@ -1,0 +1,18 @@
+---
+version: 1
+
+# Inventory service id (from markster-ops inventory/services.yml)
+service_id: your-service-id
+
+# Optional mapping from repo env names to inventory env names.
+# Example: if your repo uses "production" but inventory uses "prod".
+# envs:
+#   production: prod
+#   staging: staging
+
+# Optional provider-specific mapping (informational today).
+# Consumed by tooling over time.
+# provider: railway
+# railway:
+#   project_id: your-railway-project-id
+#   service_id: your-railway-service-id

@@ -1,0 +1,56 @@
+# Changelog
+
+## 2026-02-20
+
+- `feat(cli): add SwiftPM screencog executable for targeted macOS window screenshots`
+- `feat(capture): implement ScreenCaptureKit capture with CoreGraphics fallback and temporary activation recovery`
+- `feat(selector): add --window-title targeting and smarter app-window selection heuristics`
+- `feat(cli): add --json output mode for --list and support list filtering by app/title`
+- `feat(input): add input automation for click/double-click/right-click/type/scroll with restore-state behavior`
+- `fix(restore): strengthen focus restoration with shared snapshot, app/window re-raise, and verification retries`
+- `feat(restore): enable private SkyLight Space snapshot/restore by default with automatic fallback when unavailable`
+- `feat(restore): snapshot target-space foreground window before target activation and restore that window order afterwards`
+- `fix(restore): prefer exact window-id AX restoration over title-only matching to avoid wrong non-fullscreen window restore`
+- `fix(restore): snapshot/restore exact focused window id and report restoreVerified in capture results`
+- `feat(debug): add --restore-debug-json with before/after runtime snapshot payloads for restore diagnosis`
+- `feat(debug): include raw active-space window stacks and menuBarOwnerPID in restore diagnostics`
+- `feat(debug): persist before/after desktop screenshots in restore diagnostics for visual state comparison`
+- `feat(restore): add hard exact-window reattach fallback and optional Mission Control space nudge fallback`
+- `feat(restore): add restore tuning flags (--no-restore-hard-reattach, --no-restore-space-nudge, --restore-force-window-id)`
+- `fix(restore): preserve/restore AX full-screen state for the intended foreground window`
+- `fix(restore): use private CGSOrderWindow during restore and add frontmost-app fallback snapshot when AX/window-stack signals are missing`
+- `feat(restore): add private SLPS/SLS front-process restore attempt before AX fallback to improve Space/menu-bar restoration`
+- `fix(restore): prefer AX fullscreen-window restoration (without window-id ordering) when focused window id is unavailable`
+- `feat(restore): add strict restore parity checks (menu bar + before/after desktop diff) with configurable threshold`
+- `feat(restore): when strict parity fails, try private SkyLight neighbor-Space steps (right then left) and keep the first parity-passing state`
+- `feat(restore): strict fallback now sends Control+Arrow to System Events in-process and uses Space snapshot planning to choose multi-step direction`
+- `fix(restore): strict parity now treats unknown pre-restore menu bar owner as non-blocking and reports whether menu bar was comparable`
+- `tune(restore): increase default strict screenshot diff threshold from 0.02 to 0.05 to reduce false negatives`
+- `feat(capture): support pre-capture input actions in capture mode for one-pass action+snapshot flow`
+- `feat(capture): add capture wait/retry controls, crop support, jpeg output quality, and structured --result-json output`
+- `feat(cli): add permissions diagnostics mode with optional prompt triggers`
+- `feat(selector): add pid and bundle-id selectors for window targeting and listing context`
+- `feat(list): add --tabs mode to enumerate Chrome windows with per-window tab lists and profile hints (JSON/text)`
+- `fix(chrome): make --chrome-profile match by tab title/url when Chrome window profile metadata is unavailable`
+- `fix(capture): add ScreenCaptureKit timeout guard to avoid indefinite hangs and fall back to alternate capture path`
+- `fix(capture): add CoreGraphics fallback timeout guard to prevent Chrome window capture deadlocks`
+- `fix(chrome): bound AppleScript tab activation/restore with hard timeouts and remove blocking activate call`
+- `fix(chrome): route Chrome captures through timed CoreGraphics path to avoid ReplayKit/ScreenCaptureKit hangs`
+- `fix(capture): temporarily switch to CoreGraphics-first capture for all apps to avoid global ReplayKit deadlocks`
+- `fix(chrome): bind capture target to activated tab title to avoid drifting to unrelated Chrome windows`
+- `fix(restore): prioritize frontmost-app AX window identity and only run Ctrl+Arrow space fallback when actual space drift is detected`
+- `perf(capture): skip strict runtime snapshot collection when --no-restore-state is set`
+- `perf(capture): reduce CoreGraphics timeout fallback from 2.0s to 0.8s and shorten recovery activation delay`
+- `perf(restore): shorten restore retry backoffs and verification loops to reduce end-to-end capture latency`
+- `fix(restore): gate strict Ctrl+Arrow fallback on active-space mismatch only to avoid unnecessary key injection side effects`
+- `tune(cli): disable strict restore parity by default; opt in with --restore-strict when deep parity checks are needed`
+- `ci(release): add GitHub Actions release pipeline for arm64/x86_64 binaries plus universal binary and checksums`
+- `docs(readme): rewrite README with badges, install paths, examples, permissions, and restore guidance`
+- `feat(install): add one-command install/update script for latest GitHub release binary (arm64/x86_64)`
+- `feat(homebrew): add tap-ready Formula/screencog.rb template and release-tag updater script`
+- `docs(homebrew): add homebrew submission/update documentation`
+- `feat(skill): add Codex/LLM skill pack for screencog automation and installer script`
+- `test(cli): add argument parsing and window selection unit tests`
+- `chore(compat): remove macOS 14 deprecation warnings from activation and CoreGraphics fallback callsite`
+- `test(capture): validate CoreGraphics fallback symbol resolution`
+- `docs(usage): add window capture CLI documentation`

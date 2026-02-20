@@ -1,0 +1,49 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-case-conflict
+      - id: check-symlinks
+      - id: check-added-large-files
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: detect-private-key
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+        args: ["--redact"]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        files: "\\.(js|jsx|ts|tsx|vue|css|scss|html|md)$"
+  - repo: local
+    hooks:
+      - id: commit-msg-format
+        name: "Commit message format (Markster)"
+        entry: "python3 -c \"import re,sys;p=sys.argv[1] if len(sys.argv)>1 else None;s=open(p,encoding='utf-8').read().splitlines()[0].strip() if p else '';allow=('Merge ','Revert ','fixup! ','squash! ');import sys as _s;m=re.match(r'^(feat|fix|docs|chore|refactor|test|ci|perf)(\\([a-z0-9][a-z0-9_-]*\\))?: (.+)$', s);valid = any(s.startswith(a) for a in allow) or (m is not None and len(s)<=72);(_s.exit(0) if valid else None);print('error: invalid commit message (Markster standard)');print('');print('Expected: <type>(<scope>): <summary>');print('Types: feat, fix, docs, chore, refactor, test, ci, perf');print('Scope: optional, lowercase a-z0-9_-');print('Summary: required, <= 72 chars');print('');print('Examples:');print('  feat(policy): add repo hygiene checks');print('  fix(init): avoid overwriting existing files');print('  docs(standards): clarify branch protection mode');print('');print('Allowed prefixes: Merge, Revert, fixup!, squash!');_s.exit(1)\""
+        language: "system"
+        stages: ["commit-msg"]
+      - id: mypy
+        name: "mypy"
+        entry: "mypy"
+        language: "system"
+        types: ["python"]
+      - id: pytest
+        name: "pytest"
+        entry: "pytest"
+        language: "system"
+        types: ["python"]
+        pass_filenames: false
+      - id: eslint
+        name: "eslint"
+        entry: "npm run -s lint"
+        language: "system"
+        pass_filenames: false
+        files: "\\.(js|jsx|ts|tsx|vue)$"

@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  swift-tests:
+    if: ${{ hashFiles('Package.swift') != '' }}
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run swift test
+        run: swift test
+
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run repo CI script if present
+        run: |
+          if [ -x ./scripts/ci ]; then
+            ./scripts/ci
+            exit $?
+          fi
+          if [ -f Makefile ]; then
+            make test
+            exit $?
+          fi
+          if [ -f package.json ]; then
+            npm test
+            exit $?
+          fi
+          if [ -f pyproject.toml ] || [ -f requirements.txt ]; then
+            python -m unittest
+            exit $?
+          fi
+          echo "No CI entrypoint found. Add ./scripts/ci or a Makefile."
+          exit 1
