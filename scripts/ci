@@ -2,7 +2,9 @@
 set -euo pipefail
 
 if [[ -f Package.swift ]]; then
-  if command -v swift >/dev/null 2>&1; then
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    echo "macOS-only Swift package detected; skipping swift test on $(uname -s)."
+  elif command -v swift >/dev/null 2>&1; then
     swift test
   else
     echo "Swift not available on this runner; skipping swift test in scripts/ci."
