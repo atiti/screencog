@@ -52,6 +52,7 @@
 - `feat(skill): add Codex/LLM skill pack for screencog automation and installer script`
 - `fix(ci): make markster-ci workflow valid on GitHub Actions and update scripts/ci to pass with Swift test when available`
 - `fix(ci): update release-binaries workflow runner labels to macos-15 (arm64) and macos-15-intel (x86_64)`
+- `fix(skill): add required YAML frontmatter to skills/screencog/SKILL.md for Codex skill loader compatibility`
 - `test(cli): add argument parsing and window selection unit tests`
 - `chore(compat): remove macOS 14 deprecation warnings from activation and CoreGraphics fallback callsite`
 - `test(capture): validate CoreGraphics fallback symbol resolution`

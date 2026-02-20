@@ -1,3 +1,9 @@
+---
+name: screencog
+description: Deterministic macOS window screenshots and input automation via screencog CLI.
+version: 1
+---
+
 # screencog skill
 
 Use this skill when the user needs deterministic macOS window screenshots or input automation from an LLM agent.
