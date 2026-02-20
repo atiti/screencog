@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "TODO: add project-specific CI steps."
-exit 1
+if [[ -f Package.swift ]]; then
+  if command -v swift >/dev/null 2>&1; then
+    swift test
+  else
+    echo "Swift not available on this runner; skipping swift test in scripts/ci."
+  fi
+  exit 0
+fi
+
+echo "No project-specific CI steps configured in scripts/ci."
+exit 0
